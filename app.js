@@ -19,13 +19,22 @@ const io = require('socket.io')(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('socket has been successfully connected');
-  console.log(socket.id)
-  // socket.on('test1', console.log('ee'));
-
+  console.log('socket has been successfully connected => User ID:', socket.id);
 
   socket.on('button', (data) => {
-    console.log(data);
+    console.log(socket.id, data);
+  });
+
+  socket.on('beta', (betaData) => {
+    console.log(socket.id, betaData);
+  });
+
+  socket.on('gamma', (gammaData) => {
+    console.log("GAMMA", socket.id, gammaData);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(socket.id + 'has been disconnected');
   })
 });
 
@@ -38,7 +47,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.get('/', (req, res, next) => {
-  res.json('server_status_ok');
+  res.json('server_status_ok. This is Test version');
 });
 
 app.use((req, res, next) => {
